@@ -1,15 +1,19 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: {{ include "Bella-Bride-Wedding-Salon-helm.fullname" . }}
+  name: bella-bride
   labels:
-    {{- include "Bella-Bride-Wedding-Salon-helm.labels" . | nindent 4 }}
+    app: bella-bride
+
 spec:
   type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+
   selector:
-    {{- include "Bella-Bride-Wedding-Salon-helm.selectorLabels" . | nindent 4 }}
+    app: bella-bride
+
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
